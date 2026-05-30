@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Builders of Ceylon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+/* ── TOKENS ──────────────────────────────────────────── */
+:root{
+  --bg:      #0e0e0e;
+  --surface: #161616;
+  --border:  rgba(255,255,255,0.07);
+  --accent:  #d4a843;
+  --text:    #e8e4dc;
+  --muted:   rgba(232,228,220,0.45);
+  --green:   #25D366;
+  --green-dk:#1da851;
+  --ease:    cubic-bezier(0.4,0,0.2,1);
+  --ff-d:    'Cormorant Garamond', Georgia, serif;
+  --ff-b:    'DM Sans', system-ui, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ── REVEAL ──────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.reveal.on{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
+
+/* ── NAV ─────────────────────────────────────────────── */
+#nav{
+  position:fixed;inset:0 0 auto 0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.3rem 3rem;
+  border-bottom:1px solid transparent;
+  transition:background .4s,border-color .4s,backdrop-filter .4s;
+}
+#nav.scrolled{
+  background:rgba(14,14,14,.96);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-color:var(--border);
+}
+.logo{font-family:var(--ff-d);font-size:1.05rem;font-weight:600;letter-spacing:.05em;color:var(--text)}
+.logo strong{color:var(--accent)}
+.nav-links{list-style:none;display:flex;gap:2.4rem;align-items:center}
+.nav-links a{font-size:.73rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent)}
+.nav-cta{padding:.5rem 1.1rem;border:1px solid var(--border);border-radius:50px;color:var(--text)!important;transition:border-color .2s,background .2s!important}
+.nav-cta:hover{border-color:rgba(255,255,255,.2)!important;background:rgba(255,255,255,.05)!important}
+
+/* ── HERO STRIP ──────────────────────────────────────── */
+.hero-strip{
+  position:relative;overflow:hidden;
+  min-height:290px;
+  display:flex;align-items:flex-end;
+  padding:0 3.5rem 4rem;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+/* Animated gold top bar */
+.hero-strip::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 5%,var(--accent) 45%,rgba(212,168,67,.4) 55%,transparent 95%);
+  background-size:200% 100%;
+  animation:shimmer 3.5s linear infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Blueprint grid bg */
+.hero-strip::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:50px 50px;
+  pointer-events:none;
+}
+/* Dim-pulse matching index.html */
+.strip-pulse{position:absolute;inset:0;background:var(--bg);animation:stripDim 8s ease-in-out infinite;pointer-events:none}
+@keyframes stripDim{0%,100%{opacity:0}50%{opacity:.28}}
+
+.strip-content{position:relative;z-index:2;padding-top:8rem}
+.strip-eyebrow{font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:.85rem;display:block}
+.strip-heading{font-family:var(--ff-d);font-size:clamp(2.5rem,4.2vw,4rem);font-weight:600;line-height:1.08;color:var(--text)}
+.strip-heading em{font-style:italic;color:var(--accent)}
+
+/* ── MAIN ────────────────────────────────────────────── */
+main{max-width:800px;margin:0 auto;padding:5.5rem 2rem 7.5rem}
+
+/* Section label */
+.section-label{font-size:.63rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;display:block}
+.divider{width:40px;height:1px;margin-bottom:2.8rem;background:linear-gradient(90deg,var(--accent),rgba(212,168,67,.15))}
+
+/* ── WHATSAPP PRIMARY CARD ───────────────────────────── */
+.wa-card{
+  display:flex;align-items:center;gap:2rem;
+  padding:2.6rem 2.4rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  position:relative;overflow:hidden;
+  margin-bottom:1.2rem;
+  text-decoration:none;color:inherit;
+  transition:border-color .28s var(--ease),transform .28s var(--ease),box-shadow .28s;
+}
+.wa-card::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(37,211,102,.08) 0%,transparent 65%);
+  transition:transform .5s var(--ease);
+}
+.wa-card:hover{border-color:rgba(37,211,102,.22);transform:translateY(-3px);box-shadow:0 16px 56px rgba(0,0,0,.5)}
+.wa-card:hover::before{transform:scale(1.6)}
+
+.wa-icon{
+  width:64px;height:64px;flex-shrink:0;border-radius:50%;
+  background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 6px rgba(37,211,102,.1);
+  animation:pulseWa 2.8s ease-in-out infinite;
+}
+@keyframes pulseWa{0%,100%{box-shadow:0 0 0 6px rgba(37,211,102,.1)}50%{box-shadow:0 0 0 14px rgba(37,211,102,.04)}}
+.wa-icon svg{width:32px;height:32px;fill:white}
+
+.wa-text{position:relative;z-index:1;flex:1}
+.wa-label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(37,211,102,.7);margin-bottom:.35rem}
+.wa-title{font-family:var(--ff-d);font-size:1.65rem;font-weight:600;color:var(--text);margin-bottom:.35rem}
+.wa-sub{font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.65}
+
+.wa-arrow{flex-shrink:0;opacity:.25;transition:opacity .25s,transform .25s}
+.wa-card:hover .wa-arrow{opacity:.8;transform:translateX(5px)}
+.wa-arrow svg{width:24px;height:24px;stroke:var(--text);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── CONTACT GRID ────────────────────────────────────── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:4rem}
+
+.contact-card{
+  padding:2rem 1.8rem;
+  border:1px solid var(--border);border-radius:12px;
+  background:var(--surface);
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:.6rem;
+  position:relative;overflow:hidden;
+  transition:border-color .26s,transform .26s var(--ease);
+}
+.contact-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s var(--ease);
+}
+.contact-card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px)}
+.contact-card:hover::after{transform:scaleX(1)}
+
+.card-icon{
+  width:40px;height:40px;border-radius:9px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin-bottom:.35rem;
+}
+.card-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card-label{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.card-detail{font-family:var(--ff-d);font-size:1.2rem;font-weight:600;color:var(--text);line-height:1.25}
+.card-cta{
+  display:flex;align-items:center;gap:5px;
+  font-size:.7rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:auto;padding-top:.5rem;transition:color .2s;
+}
+.contact-card:hover .card-cta{color:var(--text)}
+.card-cta svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.contact-card:hover .card-cta svg{transform:translateX(3px)}
+
+/* ── SUGGESTION BLOCK ────────────────────────────────── */
+.suggestion-wrap{
+  border:1px solid var(--border);border-radius:14px;
+  padding:2.6rem 2.8rem;background:var(--surface);
+  position:relative;overflow:hidden;
+}
+.suggestion-wrap::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 8%,rgba(212,168,67,.2) 50%,transparent 92%);
+}
+.suggestion-heading{font-family:var(--ff-d);font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.75rem}
+.suggestion-sub{font-size:.9rem;font-weight:300;color:var(--muted);line-height:1.72;max-width:460px;margin-bottom:1.8rem}
+.btn-suggest{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.85rem 1.6rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:50px;cursor:pointer;
+  font-family:var(--ff-b);font-size:.82rem;font-weight:400;
+  color:var(--text);letter-spacing:.04em;
+  transition:background .2s,border-color .2s,transform .22s;
+}
+.btn-suggest:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);transform:translateY(-2px)}
+.btn-suggest svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:5rem 3.5rem 3rem;
+  text-align:center;
+}
+.footer-brand{font-family:var(--ff-d);font-size:1.4rem;font-weight:600;font-style:italic;color:var(--accent);margin-bottom:.4rem}
+.footer-tagline{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.18);margin-bottom:2.8rem}
+.btn-footer-wa{
+  display:inline-flex;align-items:center;gap:.65rem;
+  padding:1.05rem 2.5rem;background:var(--green);color:#fff;
+  font-family:var(--ff-b);font-size:.95rem;font-weight:500;
+  border-radius:50px;box-shadow:0 6px 28px rgba(37,211,102,.28);
+  transition:transform .22s var(--ease),box-shadow .22s,background .22s;margin-bottom:2.8rem;
+}
+.btn-footer-wa:hover{background:var(--green-dk);transform:translateY(-3px);box-shadow:0 10px 40px rgba(37,211,102,.44)}
+.btn-footer-wa svg{width:19px;height:19px;fill:white}
+.footer-bottom{padding-top:1.8rem;border-top:1px solid var(--border);font-size:.68rem;color:rgba(255,255,255,.18);letter-spacing:.05em}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media(max-width:640px){
+  #nav{padding:1rem 1.5rem}
+  .nav-links li:not(:last-child){display:none}
+  .hero-strip{padding:0 1.5rem 3rem}
+  main{padding:4rem 1.2rem 6rem}
+  .wa-card{flex-direction:column;align-items:flex-start;padding:1.8rem;gap:1.3rem}
+  .wa-arrow{display:none}
+  .contact-grid{grid-template-columns:1fr}
+  .suggestion-wrap{padding:1.8rem 1.5rem}
+  footer{padding:4rem 1.5rem 2.5rem}
+}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="index.html"><strong>Builders</strong> of Ceylon</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="Explore.html">Services</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+    <li><a class="nav-cta" href="https://wa.me/94706922157?text=Hi%20Builders%20of%20Ceylon" target="_blank" rel="noopener">WhatsApp Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO STRIP -->
+<div class="hero-strip">
+  <div class="strip-pulse" aria-hidden="true"></div>
+  <div class="strip-content">
+    <span class="strip-eyebrow">Western Province · Sri Lanka</span>
+    <h1 class="strip-heading">Let's <em>get to work.</em></h1>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <span class="section-label reveal">Request a Service</span>
+  <div class="divider reveal rd1"></div>
+
+  <!-- WhatsApp CTA -->
+  <a href="https://wa.me/94706922157?text=Hi%20Builders%20of%20Ceylon"
+     target="_blank" rel="noopener noreferrer"
+     class="wa-card reveal rd2"
+     aria-label="Chat with us on WhatsApp">
+    <div class="wa-icon">
+      <svg viewBox="0 0 32 32"><path d="M16 3C9.37 3 4 8.37 4 15c0 2.39.67 4.63 1.83 6.54L4 29l7.7-1.8A12.93 12.93 0 0016 28c6.63 0 12-5.37 12-12S22.63 3 16 3zm6.4 17.03c-.27.76-1.59 1.47-2.18 1.56-.54.08-1.22.12-1.98-.12-.46-.14-1.05-.34-1.8-.66-3.16-1.36-5.22-4.55-5.38-4.77-.16-.22-1.28-1.7-1.28-3.25s.82-2.3 1.11-2.61c.28-.3.62-.38.82-.38.21 0 .41.01.59.02.19.01.45-.07.7.54.27.63.9 2.18.98 2.34.08.16.14.35.03.56-.11.21-.16.34-.32.52-.16.18-.34.4-.48.54-.16.16-.32.33-.14.64.18.31.8 1.32 1.72 2.14 1.18 1.05 2.18 1.38 2.49 1.54.31.16.49.13.67-.08.18-.21.78-.91 1-1.22.22-.31.43-.25.72-.15.3.1 1.88.89 2.2 1.05.32.16.53.24.61.37.08.14.08.8-.19 1.56z"/></svg>
+    </div>
+    <div class="wa-text">
+      <p class="wa-label">Fastest Response</p>
+      <h2 class="wa-title">WhatsApp Us Now</h2>
+      <p class="wa-sub">We reply within minutes. Share photos, describe the problem — we handle the rest.</p>
+    </div>
+    <div class="wa-arrow">
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </a>
+
+  <!-- Call + Email -->
+  <div class="contact-grid reveal rd3">
+    <a href="tel:+94706922157" class="contact-card">
+      <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <p class="card-label">Call Us</p>
+      <p class="card-detail">070 692 2157</p>
+      <div class="card-cta">Tap to call <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+    <a href="mailto:thebuildersofceylon@gmail.com" class="contact-card">
+      <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></div>
+      <p class="card-label">Email Us</p>
+      <p class="card-detail">thebuildersofceylon@gmail.com</p>
+      <div class="card-cta">Send email <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- Suggestion -->
+  <div class="suggestion-wrap reveal rd4">
+    <h3 class="suggestion-heading">Have a suggestion?</h3>
+    <p class="suggestion-sub">We're always improving. New service you'd like us to offer, or feedback on how we can do better — we genuinely want to hear it.</p>
+    <a href="mailto:thebuildersofceylon@gmail.com?subject=Suggestion%20for%20Builders%20of%20Ceylon" class="btn-suggest">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Send a Suggestion
+    </a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-brand">Builders of Ceylon</p>
+  <p class="footer-tagline">Quality construction &amp; repair · Western Province</p>
+  <a href="https://wa.me/94706922157?text=Hi%20Builders%20of%20Ceylon" target="_blank" rel="noopener" class="btn-footer-wa">
+    <svg viewBox="0 0 32 32"><path d="M16 3C9.37 3 4 8.37 4 15c0 2.39.67 4.63 1.83 6.54L4 29l7.7-1.8A12.93 12.93 0 0016 28c6.63 0 12-5.37 12-12S22.63 3 16 3zm6.4 17.03c-.27.76-1.59 1.47-2.18 1.56-.54.08-1.22.12-1.98-.12-.46-.14-1.05-.34-1.8-.66-3.16-1.36-5.22-4.55-5.38-4.77-.16-.22-1.28-1.7-1.28-3.25s.82-2.3 1.11-2.61c.28-.3.62-.38.82-.38.21 0 .41.01.59.02.19.01.45-.07.7.54.27.63.9 2.18.98 2.34.08.16.14.35.03.56-.11.21-.16.34-.32.52-.16.18-.34.4-.48.54-.16.16-.32.33-.14.64.18.31.8 1.32 1.72 2.14 1.18 1.05 2.18 1.38 2.49 1.54.31.16.49.13.67-.08.18-.21.78-.91 1-1.22.22-.31.43-.25.72-.15.3.1 1.88.89 2.2 1.05.32.16.53.24.61.37.08.14.08.8-.19 1.56z"/></svg>
+    Have a problem? WhatsApp Us
+  </a>
+  <p class="footer-bottom">© 2025 Builders of Ceylon · All rights reserved</p>
+</footer>
+
+<script>
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>55),{passive:true});
+nav.classList.toggle('scrolled',window.scrollY>55);
+
+/* REVEAL */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
